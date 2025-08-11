@@ -20,4 +20,22 @@ fetchBtn.addEventListener('click', () => {
             output.innerHTML = `<h3>${data.title}</h3><p>${data.body}</p>`;
         })
         .catch(err => displayMessage(`Fetch error: ${err.message}`, true));
-})
+});
+
+//Task 2
+xhrBtn.addEventListener('click', => {
+    const.xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://jsonplaceholder.typicode.com/posts/2');
+    xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            const data = JSON.parse(xhr.responseText);
+            output.innerHTML = `<h3>${data.title}</h3><p>${data.body}</p>`;
+        } else {
+            displayMessage(`XHR error: ${xhr.status}`, true);
+        }
+    };
+    xhr.onerror = function() {
+        displayMessage('Network error (XHR)', true);
+    };
+    xhr.send();
+});
