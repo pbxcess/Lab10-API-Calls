@@ -39,3 +39,24 @@ xhrBtn.addEventListener('click', => {
     };
     xhr.send();
 });
+
+//Task 3
+postForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const title = document.getElementById('postTitle').value;
+    const body = document.getElementById('postBody').value;
+
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, body, userId: 1 })
+    })
+    .then(res => {
+        if (!res.ok) throw new Error('HTTP error! Status: ${res.status}');
+        return res.json();
+    })
+    .then(data => {
+        displayMessage(`Post created! ID: ${data.id}`);
+    })
+    .catch(err => displayMessage(`POST error: ${err.message}`, true));
+});
