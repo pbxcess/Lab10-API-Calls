@@ -11,7 +11,7 @@ function displayMessage(message, isError = false) {
 
 //Task 1
 fetchBtn.addEventListener('click', () => {
-    fetch('https://jsonplaceholder.typiode.come/posts/1')
+    fetch('https://jsonplaceholder.typicode.com/posts/1')
         .then(res => {
             if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
             return res.json();
@@ -52,7 +52,7 @@ postForm.addEventListener('submit', e => {
         body: JSON.stringify({ title, body, userId: 1 })
     })
     .then(res => {
-        if (!res.ok) throw new Error('HTTP error! Status: ${res.status}');
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
         return res.json();
     })
     .then(data => {
@@ -91,6 +91,10 @@ const deleteForm = document.getElementById('deleteForm');
 deleteForm.addEventListener('submit', e => {
     e.preventDefault();
     const id = document.getElementById('deleteId').value;
+
+    if (!confirm(`Are you sure you want to delete post ID ${id}?`)) {
+        return;
+    }
 
     fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
         method: 'DELETE'
