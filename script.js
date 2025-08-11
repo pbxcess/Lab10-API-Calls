@@ -84,3 +84,4 @@ putForm.addEventListener('submit', e => {
     };
     xhr.send(JSON.stringify({ id, title, body, userId: 1}));
 });
+
