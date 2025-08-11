@@ -85,3 +85,22 @@ putForm.addEventListener('submit', e => {
     xhr.send(JSON.stringify({ id, title, body, userId: 1}));
 });
 
+//Adding Delete
+const deleteForm = document.getElementById('deleteForm');
+
+deleteForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const id = document.getElementById('deleteId').value;
+
+    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+        method: 'DELETE'
+    })
+        .then(res => {
+            if (res.ok) {
+                displayMessage(`Post with ID ${id} deleted successfully (simulated).`);
+            } else {
+                throw new Error(`Failed to delete post. Status: ${res.status}`);
+            }
+        })
+        .catch(err => displayMessage(`DELETE error: ${err.message}`, true));
+});
