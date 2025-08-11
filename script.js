@@ -60,3 +60,27 @@ postForm.addEventListener('submit', e => {
     })
     .catch(err => displayMessage(`POST error: ${err.message}`, true));
 });
+
+//Task 4
+putForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const id = document.getElementById('postId').value;
+    const title = document.getElementById('updateTitle').value;
+    const body = document.getElementById('updateBody').value;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', `https://jsonplaceholder.typicode.com/posts/${id}`);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            const data = JSON.parse(xhr.responseText);
+            output.innerHTML = `<h3>Updated Post ${data.id}</h3><p>${data.title}</p><p>${data.body}</p>`
+        } else {
+            displayMessage(`PUT error: ${xhr.status}`, true);
+        }
+    };
+    xhr.onerror = function() {
+        displayMessage('Network error (PUT)', true);
+    };
+    xhr.send(JSON.stringify({ id, title, body, userId: 1}));
+});
